@@ -7,7 +7,7 @@
         :is-x-small="screen.isXSmall"
         :is-large="screen.isLarge"
       >
-        <div class="content">
+        <div class="content" style="display: flex; flex-direction: column;">
           <router-view name="content" />
         </div>
         <template #footer>

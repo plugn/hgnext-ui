@@ -5,6 +5,11 @@ export default [
     icon: "home"
   },
   {
+    text: "Toolbox",
+    path: "/toolbox",
+    icon: "favorites"
+  },
+  {
     text: "Examples",
     icon: "folder",
     items: [
