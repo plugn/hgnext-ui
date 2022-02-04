@@ -1,61 +1,76 @@
 <template>
+  <div style="flex-direction: column; flex: 1;">
+    <DxTabPanel
+      :selected-index="selectedTabIndex"
+    >
+      <DxItem title="Employee" icon="floppy">
+        <template #default>
+          <DxForm :form-data="employeeData">
+            <DxSimpleItem data-field="name"/>
+            <DxSimpleItem data-field="position"/>
+            <DxSimpleItem data-field="hireDate"/>
+            <DxSimpleItem data-field="officeNumber"/>
+          </DxForm>
+        </template>
+      </DxItem>
 
-  <DxBox
-    :height="250"
-    direction="col"
-    width="100%"
-    style="flex: 1;"
-  >
-    <DxItem
-      :ratio="1"
-    >
-      <template #default>
-        <div class="rect demo-dark header">Header</div>
-      </template>
-    </DxItem>
-    <DxItem
-      :ratio="2"
-      :base-size="0"
-    >
-      <DxBox
-        :height="125"
-        direction="row"
-        width="100%"
-      >
-        <DxItem :ratio="1">
-          <template #default>
-            <div class="rect demo-dark">Left Bar</div>
-          </template>
-        </DxItem>
-        <DxItem :ratio="1">
-          <template #default>
-            <div class="rect demo-light">Content</div>
-          </template>
-        </DxItem>
-        <DxItem :ratio="1">
-          <template #default>
-            <div class="rect demo-dark">Right Bar</div>
-          </template>
-        </DxItem>
-      </DxBox>
-    </DxItem>
-    <DxItem :ratio="1">
-      <template #default>
-        <div class="rect demo-dark footer">Footer</div>
-      </template>
-    </DxItem>
-  </DxBox>
+      <DxItem title="Notes" icon="comment">
+        Notes
+      </DxItem>
+      <DxItem title="Role" icon="isnotblank" badge="new">
+        Role
+      </DxItem>
+    </DxTabPanel>
+    <DxRadioGroup
+      :items="tabNames"
+      :value="tabNames[selectedTabIndex]"
+      layout="horizontal"
+      @value-changed="onValueChanged"
+    />
+  </div>
 </template>
 
 <script>
-  import 'devextreme/dist/css/dx.light.css'
-  import {DxBox, DxItem} from 'devextreme-vue/box'
+  import DxTabPanel, {DxItem} from 'devextreme-vue/tab-panel'
+  import DxRadioGroup from 'devextreme-vue/radio-group'
+  import DxForm, {DxSimpleItem} from 'devextreme-vue/form'
+
+  // import 'devextreme/dist/css/dx.light.css'
+  // import {DxBox, DxItem} from 'devextreme-vue/box'
+  // import DxTextArea from 'devextreme-vue/text-area'
 
   export default {
     name: 'toolbox',
     components: {
-      DxBox,
+      // DxBox,
       DxItem,
+      DxTabPanel,
+      DxRadioGroup,
+      DxForm,
+      DxSimpleItem,
+    },
+    data() {
+      const tabNames = ['Employee', 'Notes', 'Role']
+
+      const employeeData = {
+        name: 'John Heart',
+        position: 'CEO',
+        hireDate: new Date(2012, 4, 13),
+        officeNumber: 901,
+        notes: 'John has been in the Audio/Video industry since 1990. He has led DevAV as its CEO since 2003.',
+        roles: ['Chief Officer', 'Administartor', 'Manager']
+      }
+
+      return {
+        employeeData,
+        selectedTabIndex: 0,
+        tabNames,
+      }
+    },
+    methods: {
+      onValueChanged(e) {
+        this.selectedTabIndex = this.tabNames.indexOf(e.value)
+      }
     }
   }
 </script>
